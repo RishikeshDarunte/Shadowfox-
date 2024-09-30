@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hangman Game</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+      h1 {
+        color: #2c3e50;
+      }
+      .message {
+        color: #e74c3c;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .word-display {
+        font-size: 2em;
+        letter-spacing: 1em;
+        margin: 20px 0;
+      }
+      .guess-form {
+        margin: 20px 0;
+      }
+      input[type="text"] {
+        font-size: 1.2em;
+        padding: 10px;
+        width: 50px;
+        text-align: center;
+        border: 2px solid #3498db;
+        border-radius: 5px;
+      }
+      button {
+        font-size: 1.2em;
+        padding: 10px 20px;
+        margin-left: 10px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      .play-again {
+        font-size: 1em;
+        color: #3498db;
+        text-decoration: none;
+        margin-top: 20px;
+      }
+      .play-again:hover {
+        text-decoration: underline;
+      }
+      .status {
+        font-size: 1.2em;
+        margin: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hangman Game</h1>
+    {% if message %}
+    <p class="message">{{ message }}</p>
+    {% endif %}
+    <p class="word-display">{{ display_word }}</p>
+    <p class="status">
+      Incorrect guesses: {{ incorrect_guesses }} / {{ max_attempts }}
+    </p>
+    {% if not session.get('game_over') %}
+    <!-- Display form only if the game is active -->
+    <form method="post" class="guess-form">
+      <input type="text" name="guess" maxlength="1" required />
+      <button type="submit">Guess</button>
+    </form>
+    {% endif %}
+    <a href="{{ url_for('reset_game') }}" class="play-again">Play Again</a>
+  </body>
+</html>
